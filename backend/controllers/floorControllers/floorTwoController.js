@@ -2,18 +2,18 @@ const asyncHandler = require('express-async-handler')
 const FloorTwo = require('../../models/floorModels/floorTwoModel')
 
 
-// @desc    Get goals
-// @route   GET /api/goals
-// @access  Private
+// @desc    Get floorThree room
+// @route   GET /floorThree
+// @access  Public
 const getFloorTwo = asyncHandler(async (req, res) => {
     const floorTwoData = await FloorTwo.find()
 
     res.status(200).json(floorTwoData)
 })
 
-// @desc    Set goal
-// @route   POST /api/goals
-// @access  Private
+// @desc    Set floorThree room
+// @route   POST /floorThree
+// @access  Public
 const setFloorTwo = asyncHandler(async (req, res) => {
     // if(!req.body.text){
     //     res.status(400)
@@ -31,18 +31,39 @@ const setFloorTwo = asyncHandler(async (req, res) => {
     res.status(200).json(createdRoom)
 })
  
-// @desc    Update goal 
-// @route   PUT /api/goals/:id
-// @access  Private
+// @desc    Update floorThree room
+// @route   PUT /floorThree/:id
+// @access  Public
 const updateFloorTwo = asyncHandler(async (req, res) => {
-    res.status(200).json({message:`updated floor data ${req.params.id}`})
+    const floorTwo = FloorTwo.findById(req.params.id) 
+    
+    if(!floorTwo){
+        res.status(400)
+        throw new Error("otaq tapilmadi")
+    }
+
+    const updatedFloorTwo = await FloorTwo.findByIdAndUpdate(req.params.id, req.body, {
+        new:true
+    })
+
+    res.status(200).json(updatedFloorTwo)
 })
 
-// @desc    Delete goal
-// @route   DELETE /api/goals/:id
-// @access  Private
+
+// @desc    Delete floorThree room
+// @route   DELETE /floorThree/:id
+// @access  Public
 const deleteFloorTwo = asyncHandler(async (req, res) => {
-    res.status(200).json({message:`deleted data ${req.params.id}`})
+    const floorTwo = FloorTwo.findById(req.params.id) 
+
+    if(!floorTwo){
+        res.status(400)
+        throw new Error("otaq tapilmadi")
+    }
+
+    await floorTwo.deleteOne()
+
+    res.status(200).json({id:req.params.id})
 })
 
 module.exports = {

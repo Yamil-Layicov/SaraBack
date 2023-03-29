@@ -15,7 +15,8 @@ app.use(express.urlencoded({extended:false}))
 
 app.use('/floorOne', require('./routes/floorOneRoute'))
 app.use('/floorTwo', require('./routes/floorTwoRoute'))
+app.use('/floorThree', require('./routes/floorThreeRoute'))
 
 app.use(errorHandler)
 
-app.listen(port, () => console.log(`${port} running`.yellow));
+app.listen(port, () => console.log(`${port} running`.red));
